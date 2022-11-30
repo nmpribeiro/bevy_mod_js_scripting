@@ -3,6 +3,7 @@ use std::rc::Rc;
 
 use bevy::prelude::*;
 use bevy::utils::HashMap;
+use bevy_reflect::TypeRegistry;
 use serde::Serialize;
 use type_map::TypeMap;
 use wasm_bindgen::{prelude::*, JsCast};
@@ -42,7 +43,7 @@ impl BevyModJsScripting {
         let args: serde_json::Value = serde_wasm_bindgen::from_value(args).to_js_error()?;
         trace!(%op_idx, ?op_name, ?args, "Executing JS OP..");
 
-        let type_registry = AppTypeRegistry::default();
+        let type_registry = TypeRegistry::default();
 
         if let Some(op) = ops.get(op_idx) {
             let context = OpContext {

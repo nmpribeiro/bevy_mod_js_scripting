@@ -49,7 +49,7 @@ impl BevyModJsScripting {
             let context = OpContext {
                 op_state,
                 script_info,
-                type_registry,
+                type_registry: &type_registry,
             };
             let result = op
                 .run(context, world, args)

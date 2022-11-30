@@ -42,10 +42,13 @@ impl BevyModJsScripting {
         let args: serde_json::Value = serde_wasm_bindgen::from_value(args).to_js_error()?;
         trace!(%op_idx, ?op_name, ?args, "Executing JS OP..");
 
+        let type_registry = AppTypeRegistry::default();
+
         if let Some(op) = ops.get(op_idx) {
             let context = OpContext {
                 op_state,
                 script_info,
+                type_registry,
             };
             let result = op
                 .run(context, world, args)
